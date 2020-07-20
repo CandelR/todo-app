@@ -22,7 +22,4 @@ const addTodo = (text) => {
         filter
        };
   };
-
-  export default addTodo;
-  export default toogleTodo;
-  export default setVisibilityFilter; 
+ 
