@@ -33,6 +33,7 @@ const mapStateToTodoListProps = (state, { match }) => {
     todos: getVisibleTodos(state.todos, match.params.filter || "all"),
   };
 };
+
 const mapDispatchToTodoListProps = (dispatch) => {
   return {
     onTodoClick: (id) => {
@@ -40,8 +41,13 @@ const mapDispatchToTodoListProps = (dispatch) => {
     },
   };
 };
+
 const VisibleTodoList = withRouter(
-  connect(mapStateToTodoListProps, mapDispatchToTodoListProps)(TodoList)
+  connect(
+    mapStateToTodoListProps, 
+    {onTodoClick: toogleTodo}
+    )
+    (TodoList)
 );
 
 VisibleTodoList.contextTypes = {
