@@ -3,12 +3,12 @@ import { Provider } from "react-redux";
 import App from "./App";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const Root  = ({store}) => (
-    <Provider store={store} >
-        <Router>
-            <Route path="/" component={App} />
-        </Router>
-    </Provider>
+const Root = ({ store }) => (
+  <Provider store={store}>
+    <Router>
+      <Route path="/:filter?" component={App} />
+    </Router>
+  </Provider>
 );
 
 export default Root;

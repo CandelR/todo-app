@@ -14,10 +14,3 @@ export const toogleTodo = (id) => {
     id,
   };
 };
-
-export const setVisibilityFilter = (filter) => {
-  return {
-    type: "SET_VISIBILITY_FILTER",
-    filter,
-  };
-};
