@@ -1,22 +1,30 @@
-import { loadState, saveState } from "./localStorage";
 import { createStore } from "redux";
 import todoApp from "./reducers";
-import { throttle } from "lodash";
+
+const addLoggingToDispatch = (store) => {
+  const rawDispatch = store.dispatch;
+  if (!console.group) {
+    return rawDispatch;
+  }
+  return (action) => {
+    console.group(action.type);
+    console.log("%c prev state", 'color: gray', store.getState());
+    console.log("%c action", 'color: blue', action);
+    const returnValue = rawDispatch(action);
+    console.log("%c next state", 'color: green', store.getState());
+    console.groupEnd(action.type);
+    return returnValue;
+  };
+};
 
 const configureStore = () => {
-  const persistedState = loadState();
-  const store = createStore(todoApp, persistedState);
-  store.subscribe(
-    throttle(() => {
-      saveState(
-        //specify which data (in this case "todos") want to persist,
-        // in this case I save only todos for not persist the visibilty state
-        {
-          todos: store.getState().todos,
-        }
-      );
-    }, 1000)
-  );
+  //const persistedState = loadState();
+  const store = createStore(todoApp, {});
+
+  if (process.env.NODE_ENV !== "production") {
+    store.dispatch = addLoggingToDispatch(store);
+  }
+
   return store;
 };
 
